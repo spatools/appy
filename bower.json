@@ -1,0 +1,42 @@
+{
+  "name": "appy",
+  "version": "0.1.0",
+  "authors": [
+    "SPA Tools"
+  ],
+  "description": "Set of tools to help Single Page Application development",
+  "main": "dist/appy.js",
+  "keywords": [
+    "knockout",
+    "knockoutjs",
+    "underscore",
+    "spa",
+    "utilities",
+    "javascript",
+    "tools",
+    "modules",
+    "spatools",
+    "amd"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/spatools/appy",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "typings",
+    "nuget",
+    "test"
+  ],
+  "dependencies": {
+    "promise-ext": ">=0.3.0",
+    "jquery": ">=1.9.0",
+    "underscore": ">=1.6.0"
+  },
+  "devDependencies": {
+    "mocha": "~1.17.1",
+    "should": "3.1.2",
+    "sinon": "http://sinonjs.org/releases/sinon-1.8.1.js",
+    "modernizr": "~2.7.1"
+  }
+}
