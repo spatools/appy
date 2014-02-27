@@ -109,7 +109,7 @@ function downloadAndEncode(key: string, url: string, mime: string, encode?: bool
 }
 
 function loadCache(key: string): Promise<CacheResult> {
-    return store.getItem(cacheKeyPrefix + key);
+    return store.getItem(cacheKeyPrefix + key).then(function (result) { return JSON.parse(result); });
 }
 
 function saveCache(key: string, content: CacheResult): Promise<void> {
