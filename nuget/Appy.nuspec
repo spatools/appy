@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Appy</id>
+    <version>0.1.0</version>
+    <authors>SPA Tools</authors>
+    <owners>SPA Tools</owners>
+    <licenseUrl>https://github.com/appy/appy/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/appy/appy</projectUrl>
+    <iconUrl>http://www.gravatar.com/avatar/6ef2fbcb91a9299ffb3c918b50d038d4.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      Set of tools to help Single Page Application development
+    </description>
+    <releaseNotes>
+      You can see release notes at :
+      https://github.com/spatools/appy
+    </releaseNotes>
+    <copyright>Copyright 2014 - SPA Tools</copyright>
+    <tags>
+      Knockout,
+      Spa,
+      Tools,
+      Utilities,
+      Modules,
+      Cache,
+      AMD
+    </tags>
+    <dependencies>
+      <dependency id="JQuery" version="1.9.0" />
+      <dependency id="underscore.js" version="1.5.0" />
+      <dependency id="PromiseExt" version="0.3.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\dist\base64.js" target="Content\Scripts\appy" />
+    <file src="..\dist\cache.js" target="Content\Scripts\appy" />
+    <file src="..\dist\loader.js" target="Content\Scripts\appy" />
+    <file src="..\dist\navigator.js" target="Content\Scripts\appy" />
+    <file src="..\dist\path.js" target="Content\Scripts\appy" />
+    <file src="..\dist\store.js" target="Content\Scripts\appy" />
+    <file src="..\dist\timers.js" target="Content\Scripts\appy" />
+    <file src="..\dist\appy.d.ts" target="Content\Scripts\appy" />
+  </files>
+</package>
