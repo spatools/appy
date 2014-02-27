@@ -85,7 +85,7 @@ describe("Timers", () => {
 
         it("should tick again after complete callback was called", (done) => {
             var complete,
-                timerSpy = sinon.spy(function (c) { complete = c }),
+                timerSpy = sinon.spy(function (c) { complete = c; }),
                 timer = new timers.AsyncTimer(10, timerSpy);
 
             timer.start();
