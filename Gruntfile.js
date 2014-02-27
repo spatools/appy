@@ -170,6 +170,7 @@ module.exports = function (grunt) {
     grunt.registerTask("fixdecla", function () {
         var content = grunt.file.read("dist/appy.d.ts");
         content = content.replace(/\.{2}\/typings/g, "../../../typings");
+        content = content.replace(/\.{2}\/bower_components/g, "../..");
         grunt.file.write("dist/appy.d.ts", content);
     });
 
