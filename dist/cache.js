@@ -104,7 +104,9 @@ define(["require", "exports", "jquery", "promise/extensions", "./loader", "./bas
     }
 
     function loadCache(key) {
-        return store.getItem(cacheKeyPrefix + key);
+        return store.getItem(cacheKeyPrefix + key).then(function (result) {
+            return JSON.parse(result);
+        });
     }
 
     function saveCache(key, content) {
