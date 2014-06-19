@@ -25,6 +25,9 @@
     },
     "modernizr/modernizr.d.ts": {
       "commit": "3816d9eb7eda8b8a584072087b912276c3ec5912"
+    },
+    "requirejs/require.d.ts": {
+      "commit": "6745ac3279f3650a8ce5e8877cca831272fe0a06"
     }
   }
 }

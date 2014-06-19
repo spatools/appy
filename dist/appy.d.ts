@@ -134,6 +134,7 @@ export function getItem(key: any): Promise<any>;
 export function setItem(key: any, data: any): Promise<void>;
 export function removeItem(key: any): Promise<void>;
 export function clear(): Promise<void>;
+export function getStore(type: string): ISimpleStorage;
 export function changeStore(type: string): void;
 export function addStorageType(type: string, store: ISimpleStorage): void;
 export function addStorageType(type: string, store: ISimpleStorage, change: boolean): void;

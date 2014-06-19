@@ -374,17 +374,19 @@ define(["require", "exports", "underscore", "promise/extensions"], function(requ
         return _store.clear();
     }
     exports.clear = clear;
-
-    function changeStore(type) {
+    function getStore(type) {
         if (!stores[type]) {
             throw new Error("Not Found");
         }
-
         if (_.isFunction(stores[type])) {
-            _store = new stores[type]();
+            return new stores[type]();
         }
 
-        _store = stores[type];
+        return stores[type];
+    }
+    exports.getStore = getStore;
+    function changeStore(type) {
+        _store = exports.getStore(type);
     }
     exports.changeStore = changeStore;
 

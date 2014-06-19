@@ -1,4 +1,4 @@
-define(["require", "exports", "promise"], function(require, exports, Promise) {
+define(["require", "exports"], function(require, exports) {
     var encode, decode;
 
     if (window.btoa) {

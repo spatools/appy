@@ -352,19 +352,19 @@ export function removeItem(key: any): Promise<void> {
 export function clear(): Promise<void> {
     return _store.clear();
 }
-
-export function changeStore(type: string): void {
+export function getStore(type: string): ISimpleStorage {
     if (!stores[type]) {
         throw new Error("Not Found");
     }
-
     if (_.isFunction(stores[type])) {
-        _store = new stores[type]();
+        return new stores[type]();
     }
 
-    _store = stores[type];
+    return stores[type];
 }
-
+export function changeStore(type: string): void {
+    _store = getStore(type);
+}
 export function addStorageType(type: string, store: ISimpleStorage): void;
 export function addStorageType(type: string, store: ISimpleStorage, change: boolean): void;
 export function addStorageType(type: string, store: ISimpleStorage, change?: boolean): void {
