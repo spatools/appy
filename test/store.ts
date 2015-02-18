@@ -279,7 +279,7 @@ describe("Store", () => {
 
 //        store.setItem(storeKey, simpleValue);
 //        equal(store.length, 1, "The value '" + simpleValue + "' has been added on key '" + storeKey + "', so store.length must be '1'");
-        
+
 //        var val = store.getItem(storeKey);
 //        equal(val, simpleValue, "The value on key '" + storeKey + "' must be '" + simpleValue + "'");
 
@@ -289,7 +289,7 @@ describe("Store", () => {
 
 //    test("store.complex", () => {
 //        expect(6);
-        
+
 //        store.clear();
 //        equal(store.length, 0, "Store has been cleared, so store.length must be '0'");
 
