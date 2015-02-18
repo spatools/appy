@@ -91,7 +91,7 @@ function downloadAndEncode(key: string, url: string, mime: string, encode?: bool
     if (cache)
         opts.data = { date: cache.date };
 
-    return Promise.cast<string>($.ajax(opts)).then(content => {
+    return Promise.resolve<string>($.ajax(opts)).then(content => {
         if (!content && cache) {
             return Promise.resolve(cache);
         }

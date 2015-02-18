@@ -1,5 +1,5 @@
 /// <reference path="../_definitions.d.ts" />
-/*jshint bitwise: true */
+/*jshint bitwise: false*/
 
 import Promise = require("promise");
 

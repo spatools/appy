@@ -155,7 +155,7 @@ export class IndexedDBStorage implements ISimpleStorage {
         });
     }
     private ensureDatabase(): Promise<IDBDatabase> {
-        return Promise.cast(this.db || this.checkDatabaseConnection());
+        return Promise.resolve(this.db || this.checkDatabaseConnection());
     }
 
     public clear(): Promise<void> {
