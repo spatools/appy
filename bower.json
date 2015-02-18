@@ -1,6 +1,6 @@
 {
   "name": "appy",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "authors": [
     "SPA Tools"
   ],
@@ -30,7 +30,7 @@
   ],
   "dependencies": {
     "promise-ext": "^0.3.6",
-    "jquery": "^1.9.1",
+    "jquery": ">=1.9.0",
     "underscore": "^1.7.0"
   },
   "devDependencies": {
