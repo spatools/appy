@@ -1,6 +1,7 @@
-define(["require", "exports"], function(require, exports) {
+/// <reference path="../_definitions.d.ts" />
+/*jshint bitwise: false*/
+define(["require", "exports"], function (require, exports) {
     var encode, decode;
-
     if (window.btoa) {
         encode = function (text) {
             return btoa(unescape(encodeURIComponent(text)));
@@ -8,95 +9,83 @@ define(["require", "exports"], function(require, exports) {
         decode = function (text) {
             return decodeURIComponent(escape(atob(text)));
         };
-    } else {
+    }
+    else {
         var _codex = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", _utf8_encode = function (text) {
             text = text.replace(/\r\n/g, "\n");
             var result = "";
             for (var n = 0; n < text.length; n++) {
                 var c = text.charCodeAt(n);
-
                 if (c < 128) {
                     result += String.fromCharCode(c);
-                } else if ((c > 127) && (c < 2048)) {
+                }
+                else if ((c > 127) && (c < 2048)) {
                     result += String.fromCharCode((c >> 6) | 192);
                     result += String.fromCharCode((c & 63) | 128);
-                } else {
+                }
+                else {
                     result += String.fromCharCode((c >> 12) | 224);
                     result += String.fromCharCode(((c >> 6) & 63) | 128);
                     result += String.fromCharCode((c & 63) | 128);
                 }
             }
-
             return result;
         }, _utf8_decode = function (text) {
             var result = "", i = 0, c, c1, c2, c3;
-
             c = c1 = c2 = 0;
-
             while (i < text.length) {
                 c = text.charCodeAt(i);
-
                 if (c < 128) {
                     result += String.fromCharCode(c);
                     i++;
-                } else if ((c > 191) && (c < 224)) {
+                }
+                else if ((c > 191) && (c < 224)) {
                     c2 = text.charCodeAt(i + 1);
                     result += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
                     i += 2;
-                } else {
+                }
+                else {
                     c2 = text.charCodeAt(i + 1);
                     c3 = text.charCodeAt(i + 2);
                     result += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
                     i += 3;
                 }
             }
-
             return result;
         };
-
         encode = function (text) {
             var result = "", chr1, chr2, chr3, enc1, enc2, enc3, enc4, i = 0;
-
             text = _utf8_encode(text);
-
             while (i < text.length) {
                 chr1 = text.charCodeAt(i++);
                 chr2 = text.charCodeAt(i++);
                 chr3 = text.charCodeAt(i++);
-
                 enc1 = chr1 >> 2;
                 enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
                 enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
                 enc4 = chr3 & 63;
-
                 if (isNaN(chr2)) {
                     enc3 = enc4 = 64;
-                } else if (isNaN(chr3)) {
+                }
+                else if (isNaN(chr3)) {
                     enc4 = 64;
                 }
-
                 result = result + _codex.charAt(enc1) + _codex.charAt(enc2) + _codex.charAt(enc3) + _codex.charAt(enc4);
             }
-
             return result;
         };
         decode = function (text) {
             var result = "", chr1, chr2, chr3, enc1, enc2, enc3, enc4, i = 0;
-
             text = text.replace(/[^A-Za-z0-9\+\/\=]/g, "");
-
             while (i < text.length) {
                 enc1 = _codex.indexOf(text.charAt(i++));
                 enc2 = _codex.indexOf(text.charAt(i++));
                 enc3 = _codex.indexOf(text.charAt(i++));
                 enc4 = _codex.indexOf(text.charAt(i++));
-
                 chr1 = (enc1 << 2) | (enc2 >> 4);
                 chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
                 chr3 = ((enc3 & 3) << 6) | enc4;
-
                 result = result + String.fromCharCode(chr1);
-
                 if (enc3 !== 64) {
                     result = result + String.fromCharCode(chr2);
                 }
@@ -104,28 +93,23 @@ define(["require", "exports"], function(require, exports) {
                     result = result + String.fromCharCode(chr3);
                 }
             }
-
             result = _utf8_decode(result);
-
             return result;
         };
     }
-
+    /** Create Data URL with specified mime type and content */
     var createDataURL = function createDataURL(mimeType, content) {
         return "data:" + mimeType + ";base64," + content;
     };
-
+    /** Create Data URL with specified mime type and context */
     var encodeDataURL = function (mimeType, text) {
         return "data:" + mimeType + ";base64," + encode(text);
     };
-
     var result = {
         encode: encode,
         decode: decode,
         createDataURL: createDataURL,
         encodeDataURL: encodeDataURL
     };
-
-    
     return result;
 });

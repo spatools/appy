@@ -20,18 +20,29 @@ export interface CacheResult {
     content: string;
     date: string;
 }
+/** Reset entire cache resources */
 export function reset(): Promise<any>;
+/** Load a resource in cache */
 export function load(key: string, url: string, mime?: string, encode?: boolean, force?: boolean): Promise<CacheResult>;
+/** Load a script in cache */
 export function loadScript(key: string, url: string, force?: boolean): Promise<any>;
+/** Load a style in cache */
 export function loadStyle(key: string, url: string, force?: boolean): Promise<void>;
+/** Load a style sheet in cache */
 export function loadStylesheet(key: string, url: string, force?: boolean): Promise<string>;
+/** Load an HTML fragment in cache */
 export function loadHTML(key: string, url: string, force?: boolean): Promise<string>;
+/** Load an JSON result in cache */
 export function loadJSON<T>(key: string, url: string, force?: boolean): Promise<T>;
 }
 
 declare module "koutils/loader" {
+import Promise = require("promise");
+/** Load script document by url */
 export function loadScript(url: string): Promise<string>;
+/** Load specified style into current page */
 export function loadStyle(css: string): Promise<void>;
+/** Load specified stylesheet by url */
 export function loadStylesheet(url: string): Promise<string>;
 }
 
@@ -70,12 +81,19 @@ export var mimeTypes: {
     [key: string]: string;
 };
 export var separator: string;
+/** Get file name from its path */
 export function getFileName(path: string): string;
+/** Get Extension from file name or path */
 export function getExtension(path: string): string;
+/** Get mime-type from file name or path */
 export function getMimeType(path: string): string;
+/** Get mime-type associated with specified extension */
 export function getMimeTypeByExtension(extension: string): string;
+/** Get path without file name */
 export function getDirectory(path: string): string;
+/** Get current directory name */
 export function getDirectoryName(path: string): string;
+/** Combine multiple path to create a single path */
 export function combine(...paths: string[]): string;
 }
 
@@ -91,42 +109,42 @@ export interface ISimpleStorage {
 export class MemoryStorage implements ISimpleStorage {
     private memory;
     private clone(obj);
-    public length(): Promise<number>;
-    public key(index: any): Promise<any>;
-    public getItem(key: any): Promise<any>;
-    public setItem(key: any, value: any): Promise<void>;
-    public removeItem(key: any): Promise<void>;
-    public clear(): Promise<void>;
+    length(): Promise<number>;
+    key(index: any): Promise<any>;
+    getItem(key: any): Promise<any>;
+    setItem(key: any, value: any): Promise<void>;
+    removeItem(key: any): Promise<void>;
+    clear(): Promise<void>;
 }
 export class WebSQLStorage implements ISimpleStorage {
     private db;
-    public dbname: string;
-    public tablename: string;
-    public dbsize: number;
+    dbname: string;
+    tablename: string;
+    dbsize: number;
     private executeSql(db, req, values?);
     private ensureDb();
-    public length(): Promise<number>;
-    public clear(): Promise<void>;
-    public key(index: number): Promise<any>;
-    public getItem(key: string): Promise<any>;
-    public setItem(key: string, value: any): Promise<any>;
-    public removeItem(key: string): Promise<any>;
+    length(): Promise<number>;
+    clear(): Promise<void>;
+    key(index: number): Promise<any>;
+    getItem(key: string): Promise<any>;
+    setItem(key: string, value: any): Promise<any>;
+    removeItem(key: string): Promise<any>;
 }
 export class IndexedDBStorage implements ISimpleStorage {
     private db;
-    public dbversion: number;
-    public dbname: string;
-    public tablename: string;
+    dbversion: number;
+    dbname: string;
+    tablename: string;
     constructor();
     private createUpgradeNeeded(reject);
     private checkDatabaseConnection();
     private ensureDatabase();
-    public clear(): Promise<void>;
-    public length(): Promise<number>;
-    public key(index: number): Promise<any>;
-    public getItem(key: string): Promise<any>;
-    public setItem(key: string, value: any): Promise<void>;
-    public removeItem(key: string): Promise<void>;
+    clear(): Promise<void>;
+    length(): Promise<number>;
+    key(index: number): Promise<any>;
+    getItem(key: string): Promise<any>;
+    setItem(key: string, value: any): Promise<void>;
+    removeItem(key: string): Promise<void>;
 }
 export function length(): Promise<number>;
 export function key(index: any): Promise<any>;
@@ -149,13 +167,27 @@ export class Timer {
     private callOnFirstStart;
     private tickCount;
     private timeout;
+    /**
+     * Constructs a new AsyncTimer
+     * @param interval Interval between two timer iteration
+     * @param callback Callback to be called when timer ticks
+     * @param callBackContext Context (this) to be applied to callback when timer ticks
+     * @param enabled Specifiy whether the timer need to be started directly
+     * @param callOnFirstStart Specify whether the timer must start directly with a call to specified callback
+     */
     constructor(interval: number, callback: () => void, callBackContext?: any, enabled?: boolean, callOnFirstStart?: boolean);
-    public getTickCount(): number;
-    public setInterval(interval: number): void;
-    public setCallback(callback: () => void): void;
-    public start(callOnFirstStart?: boolean): void;
-    public stop(): void;
-    public reset(): void;
+    /** Get the total number of ticks elapsed since timer started. */
+    getTickCount(): number;
+    /** Set a new interval for the current timer. */
+    setInterval(interval: number): void;
+    /** Set a new callback to be called when timer ticks. */
+    setCallback(callback: () => void): void;
+    /** Start current timer. */
+    start(callOnFirstStart?: boolean): void;
+    /** Stop current timer. */
+    stop(): void;
+    /** Reset current timer by setting tick count to 0. */
+    reset(): void;
     private setTimeout();
     private onTimerTick();
 }
@@ -167,13 +199,27 @@ export class AsyncTimer {
     private callOnFirstStart;
     private tickCount;
     private timeout;
+    /**
+     * Constructs a new AsyncTimer
+     * @param interval Interval between two timer iteration
+     * @param callback Callback to be called when timer ticks
+     * @param callBackContext Context (this) to be applied to callback when timer ticks
+     * @param enabled Specifiy whether the timer need to be started directly
+     * @param callOnFirstStart Specify whether the timer must start directly with a call to specified callback
+     */
     constructor(interval: number, callback: (complete: () => void) => void, callBackContext?: any, enabled?: boolean, callOnFirstStart?: boolean);
-    public getTickCount(): number;
-    public setInterval(interval: number): void;
-    public setCallback(callback: (complete: () => void) => void): void;
-    public start(callOnFirstStart?: boolean): void;
-    public stop(): void;
-    public reset(): void;
+    /** Get the total number of ticks elapsed since timer started. */
+    getTickCount(): number;
+    /** Set a new interval for the current timer. */
+    setInterval(interval: number): void;
+    /** Set a new callback to be called when timer ticks. */
+    setCallback(callback: (complete: () => void) => void): void;
+    /** Start current timer. */
+    start(callOnFirstStart?: boolean): void;
+    /** Stop current timer. */
+    stop(): void;
+    /** Reset current timer by setting tick count to 0. */
+    reset(): void;
     private setTimeout();
     private onTimerTick();
     private completeCallback();

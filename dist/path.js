@@ -1,4 +1,5 @@
-define(["require", "exports", "underscore"], function(require, exports, _) {
+/// <reference path="../_definitions.d.ts" />
+define(["require", "exports", "underscore"], function (require, exports, _) {
     exports.mimeTypes = {
         "*": "application/octet-stream",
         323: "text/h323",
@@ -190,58 +191,54 @@ define(["require", "exports", "underscore"], function(require, exports, _) {
         z: "application/x-compress",
         zip: "application/zip"
     };
-
     exports.separator = "/";
-
+    /** Get file name from its path */
     function getFileName(path) {
         var regex = /[\/\\]?([^\/\\]*)$/;
         return regex.test(path) ? path.match(regex)[1] : "";
     }
     exports.getFileName = getFileName;
-
+    /** Get Extension from file name or path */
     function getExtension(path) {
         var regex = /\.([^\.]*)$/;
         return regex.test(path) ? path.match(regex)[1] : null;
     }
     exports.getExtension = getExtension;
-
+    /** Get mime-type from file name or path */
     function getMimeType(path) {
-        var extension = exports.getExtension(path);
-        return extension ? exports.getMimeTypeByExtension(extension) : exports.mimeTypes["*"];
+        var extension = getExtension(path);
+        return extension ? getMimeTypeByExtension(extension) : exports.mimeTypes["*"];
     }
     exports.getMimeType = getMimeType;
-
+    /** Get mime-type associated with specified extension */
     function getMimeTypeByExtension(extension) {
         return exports.mimeTypes[extension] || exports.mimeTypes["*"];
     }
     exports.getMimeTypeByExtension = getMimeTypeByExtension;
-
+    /** Get path without file name */
     function getDirectory(path) {
         var regex = /^(.*)[\/\\]([^\/\\]*)$/;
         return regex.test(path) ? path.match(regex)[1] : null;
     }
     exports.getDirectory = getDirectory;
-
+    /** Get current directory name */
     function getDirectoryName(path) {
         var regex = /([^\/\\]*)[\/\\]([^\/\\]*)$/;
         return regex.test(path) ? path.match(regex)[1] : null;
     }
     exports.getDirectoryName = getDirectoryName;
-
+    /** Combine multiple path to create a single path */
     function combine() {
         var paths = [];
-        for (var _i = 0; _i < (arguments.length - 0); _i++) {
-            paths[_i] = arguments[_i + 0];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            paths[_i - 0] = arguments[_i];
         }
         var result = "";
-
         _.each(paths, function (path, index) {
             result += path;
-
             if (index < paths.length - 1)
                 result += exports.separator;
         });
-
         return result.replace(/[\/\\]+/g, exports.separator);
     }
     exports.combine = combine;
