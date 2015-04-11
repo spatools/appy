@@ -9,7 +9,6 @@ export interface ISimpleStorage {
     clear(): Promise<void>
 }
 
-import _ = require("underscore");
 import promiseExt = require("promise/extensions");
 var win = <any>window,
     _store: ISimpleStorage,
@@ -27,11 +26,18 @@ export class MemoryStorage implements ISimpleStorage {
 
     public length(): Promise<number> {
         return promiseExt.timeout()
-            .then<number>(() => _.size(this.memory));
+            .then<number>(() => Object.keys(this.memory).length);
     }
-    public key(index: any): Promise<any> {
-        return promiseExt.timeout()
-            .then(() => _.find(_.keys(this.memory), (val, i: number) => i === index) || Promise.reject("Not Found"));
+    public key(index: number): Promise<string> {
+        return promiseExt.timeout().then(() => {
+            var key = Object.keys(this.memory)[index];
+
+            if (!key) {
+                throw new Error("No key at index " + index);
+            }
+
+            return key;
+        });
     }
     public getItem(key: any): Promise<any> {
         return promiseExt.timeout()
@@ -69,10 +75,10 @@ export class WebSQLStorage implements ISimpleStorage {
                         values || [],
                         (tx, result) => { resolve(result); },
                         reject
-                    );
+                        );
                 },
                 reject
-            );
+                );
         });
     }
     private ensureDb(): Promise<any> {
@@ -161,14 +167,14 @@ export class IndexedDBStorage implements ISimpleStorage {
     public clear(): Promise<void> {
         return this.ensureDatabase()
             .then(db => {
-                return new Promise<void>((resolve, reject) => {
-                    var tx = db.transaction([this.tablename], "readwrite");
-                    tx.oncomplete = e => resolve.call(undefined);
-                    tx.onabort = reject;
+            return new Promise<void>((resolve, reject) => {
+                var tx = db.transaction([this.tablename], "readwrite");
+                tx.oncomplete = e => resolve.call(undefined);
+                tx.onabort = reject;
 
-                    tx.objectStore(this.tablename).clear();
-                });
+                tx.objectStore(this.tablename).clear();
             });
+        });
     }
 
     public length(): Promise<number> {
@@ -288,7 +294,7 @@ function createFromIStorage(type: string, storage: Storage): void {
     stores[type] = StorageWrapper;
 }
 
-_.each(["localStorage", "sessionStorage"], (storageType: string) => {
+["localStorage", "sessionStorage"].forEach(storageType => {
     try {
         if (win[storageType] && win[storageType].getItem) {
             createFromIStorage(storageType, win[storageType]);
@@ -356,7 +362,7 @@ export function getStore(type: string): ISimpleStorage {
     if (!stores[type]) {
         throw new Error("Not Found");
     }
-    if (_.isFunction(stores[type])) {
+    if (typeof stores[type] === "function") {
         return new stores[type]();
     }
 

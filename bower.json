@@ -30,8 +30,7 @@
   ],
   "dependencies": {
     "promise-ext": "^0.3.6",
-    "jquery": ">=1.9.0",
-    "underscore": "^1.7.0"
+    "jquery": ">=1.9.0"
   },
   "devDependencies": {
     "mocha": "^2.1.0",

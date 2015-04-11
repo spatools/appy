@@ -1,7 +1,5 @@
 /// <reference path="../_definitions.d.ts" />
 
-import _ = require("underscore");
-
 export var mimeTypes: { [key: string]: string } = {
     "*": "application/octet-stream",
     323: "text/h323",
@@ -230,14 +228,5 @@ export function getDirectoryName(path: string): string {
 
 /** Combine multiple path to create a single path */
 export function combine(...paths: string[]): string {
-    var result = "";
-
-    _.each(paths, (path: string, index: number) => {
-        result += path;
-
-        if (index < paths.length - 1)
-            result += separator;
-    });
-
-    return result.replace(/[\/\\]+/g, separator);
+    return paths.join(separator).replace(/[\/\\]+/g, separator);
 }
