@@ -1,5 +1,5 @@
 /// <reference path="../_definitions.d.ts" />
-define(["require", "exports", "underscore", "promise/extensions"], function (require, exports, _, promiseExt) {
+define(["require", "exports", "promise/extensions"], function (require, exports, promiseExt) {
     var win = window, _store, stores = {};
     //#region Create Available Stores
     var MemoryStorage = (function () {
@@ -11,11 +11,17 @@ define(["require", "exports", "underscore", "promise/extensions"], function (req
         };
         MemoryStorage.prototype.length = function () {
             var _this = this;
-            return promiseExt.timeout().then(function () { return _.size(_this.memory); });
+            return promiseExt.timeout().then(function () { return Object.keys(_this.memory).length; });
         };
         MemoryStorage.prototype.key = function (index) {
             var _this = this;
-            return promiseExt.timeout().then(function () { return _.find(_.keys(_this.memory), function (val, i) { return i === index; }) || Promise.reject("Not Found"); });
+            return promiseExt.timeout().then(function () {
+                var key = Object.keys(_this.memory)[index];
+                if (!key) {
+                    throw new Error("No key at index " + index);
+                }
+                return key;
+            });
         };
         MemoryStorage.prototype.getItem = function (key) {
             var _this = this;
@@ -252,7 +258,7 @@ define(["require", "exports", "underscore", "promise/extensions"], function (req
         };
         stores[type] = StorageWrapper;
     }
-    _.each(["localStorage", "sessionStorage"], function (storageType) {
+    ["localStorage", "sessionStorage"].forEach(function (storageType) {
         try {
             if (win[storageType] && win[storageType].getItem) {
                 createFromIStorage(storageType, win[storageType]);
@@ -318,7 +324,7 @@ define(["require", "exports", "underscore", "promise/extensions"], function (req
         if (!stores[type]) {
             throw new Error("Not Found");
         }
-        if (_.isFunction(stores[type])) {
+        if (typeof stores[type] === "function") {
             return new stores[type]();
         }
         return stores[type];

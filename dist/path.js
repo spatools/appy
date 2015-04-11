@@ -1,5 +1,5 @@
 /// <reference path="../_definitions.d.ts" />
-define(["require", "exports", "underscore"], function (require, exports, _) {
+define(["require", "exports"], function (require, exports) {
     exports.mimeTypes = {
         "*": "application/octet-stream",
         323: "text/h323",
@@ -233,13 +233,7 @@ define(["require", "exports", "underscore"], function (require, exports, _) {
         for (var _i = 0; _i < arguments.length; _i++) {
             paths[_i - 0] = arguments[_i];
         }
-        var result = "";
-        _.each(paths, function (path, index) {
-            result += path;
-            if (index < paths.length - 1)
-                result += exports.separator;
-        });
-        return result.replace(/[\/\\]+/g, exports.separator);
+        return paths.join(exports.separator).replace(/[\/\\]+/g, exports.separator);
     }
     exports.combine = combine;
 });

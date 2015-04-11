@@ -1,5 +1,4 @@
 /// <reference path="../../../typings/jquery/jquery.d.ts" />
-/// <reference path="../../../typings/underscore/underscore.d.ts" />
 /// <reference path="../../promise-ext/src/promise.d.ts" />
 
 declare module "koutils/base64" {
@@ -110,7 +109,7 @@ export class MemoryStorage implements ISimpleStorage {
     private memory;
     private clone(obj);
     length(): Promise<number>;
-    key(index: any): Promise<any>;
+    key(index: number): Promise<string>;
     getItem(key: any): Promise<any>;
     setItem(key: any, value: any): Promise<void>;
     removeItem(key: any): Promise<void>;
