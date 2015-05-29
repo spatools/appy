@@ -1,7 +1,5 @@
 /// <reference path="../_definitions.d.ts" />
 
-import Promise = require("promise");
-
 var doc = document, head = doc.head,
     interval = 10, timeout = 150000,
     cssRules, sheet;

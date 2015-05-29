@@ -29,13 +29,13 @@
     "test"
   ],
   "dependencies": {
-    "promise-ext": "^0.3.6",
     "jquery": ">=1.9.0"
   },
   "devDependencies": {
     "mocha": "^2.1.0",
     "should": "^5.0.0",
     "sinon": "http://sinonjs.org/releases/sinon-1.8.1.js",
-    "modernizr": "^2.8.3"
+    "modernizr": "^2.8.3",
+    "promizr": "~0.1.3"
   }
 }

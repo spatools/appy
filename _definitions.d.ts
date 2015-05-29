@@ -1,7 +1,11 @@
 ﻿/// <reference path="typings/jquery/jquery.d.ts" />
 /// <reference path="typings/modernizr/modernizr.d.ts" />
-/// <reference path="bower_components/promise-ext/src/promise.d.ts" />
+/// <reference path="bower_components/promizr/promise.d.ts" />
 /// <reference path="src/base.d.ts" />
+
+interface MSApp {
+    execUnsafeLocalFunction<T>(cb: () => T);
+}
 
 declare function escape(text: string): string;
 declare function unescape(text: string): string;

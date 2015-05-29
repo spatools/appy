@@ -1,7 +1,6 @@
 /// <reference path="../_definitions.d.ts" />
 
 import $ = require("jquery");
-import promiseExt = require("promise/extensions");
 import loader = require("./loader");
 import base64 = require("./base64");
 import store = require("./store");
@@ -23,9 +22,14 @@ export interface CacheResult {
 /** Reset entire cache resources */
 export function reset(): Promise<any> {
     return store.length().then(length => {
-        return promiseExt.forEach(new Array(length), (val, index) => {
-            return store.key(index).then(key => store.removeItem(key));
-        });
+        var promises = [],
+            i = 0;
+
+        for (; i < length; i++) {
+            promises.push(store.key(i).then(removeIfInCache));
+        }
+
+        return Promise.all(promises);
     });
 }
 
@@ -114,6 +118,14 @@ function loadCache(key: string): Promise<CacheResult> {
 
 function saveCache(key: string, content: CacheResult): Promise<void> {
     return store.setItem(cacheKeyPrefix + key, JSON.stringify(content));
+}
+
+function removeIfInCache(key: string): Promise<void> {
+    if (key.indexOf(cacheKeyPrefix) === 0) {
+        return store.removeItem(key);
+    }
+
+    return Promise.resolve<void>();
 }
 
 //#endregion

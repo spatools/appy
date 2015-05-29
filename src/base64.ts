@@ -1,8 +1,6 @@
 /// <reference path="../_definitions.d.ts" />
 /*jshint bitwise: false*/
 
-import Promise = require("promise");
-
 var encode: (str: string) => string,
     decode: (str: string) => string;
 

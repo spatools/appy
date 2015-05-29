@@ -9,13 +9,18 @@ export interface ISimpleStorage {
     clear(): Promise<void>
 }
 
-import promiseExt = require("promise/extensions");
 var win = <any>window,
     _store: ISimpleStorage,
     stores: any = {};
 
 
 //#region Create Available Stores
+
+function timeout(): Promise<void> {
+    return new Promise<void>(resolve => {
+        setTimeout(resolve, 1);
+    });
+}
 
 export class MemoryStorage implements ISimpleStorage {
     private memory = {};
@@ -25,11 +30,11 @@ export class MemoryStorage implements ISimpleStorage {
     }
 
     public length(): Promise<number> {
-        return promiseExt.timeout()
+        return timeout()
             .then<number>(() => Object.keys(this.memory).length);
     }
     public key(index: number): Promise<string> {
-        return promiseExt.timeout().then(() => {
+        return timeout().then(() => {
             var key = Object.keys(this.memory)[index];
 
             if (!key) {
@@ -40,20 +45,20 @@ export class MemoryStorage implements ISimpleStorage {
         });
     }
     public getItem(key: any): Promise<any> {
-        return promiseExt.timeout()
+        return timeout()
             .then(() => this.clone(this.memory[key]));
     }
     public setItem(key: any, value: any): Promise<void> {
-        return promiseExt.timeout()
+        return timeout()
             .then(() => { this.memory[key] = value; });
     }
     public removeItem(key: any): Promise<void> {
-        return promiseExt.timeout()
+        return timeout()
             .then(() => { delete this.memory[key]; });
     }
 
     public clear(): Promise<void> {
-        return promiseExt.timeout()
+        return timeout()
             .then(() => { this.memory = {}; });
     }
 }
@@ -271,23 +276,23 @@ function createFromIStorage(type: string, storage: Storage): void {
         return Promise.resolve(storage.length);
     };
     StorageWrapper.prototype.key = function key(index: number): Promise<any> {
-        return promiseExt.timeout()
+        return timeout()
             .then(() => storage.key(index));
     };
     StorageWrapper.prototype.getItem = function getItem(key: string): Promise<any> {
-        return promiseExt.timeout()
+        return timeout()
             .then(() => storage.getItem(key));
     };
     StorageWrapper.prototype.setItem = function setItem(key: string, value: any): Promise<void> {
-        return promiseExt.timeout()
+        return timeout()
             .then(() => storage.setItem(key, value));
     };
     StorageWrapper.prototype.removeItem = function removeItem(key: string): Promise<void> {
-        return promiseExt.timeout()
+        return timeout()
             .then(() => storage.removeItem(key));
     };
     StorageWrapper.prototype.clear = function clear(): Promise<void> {
-        return promiseExt.timeout()
+        return timeout()
             .then(() => storage.clear());
     };
 

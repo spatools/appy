@@ -10,7 +10,7 @@ requirejs.config({
     paths: {
         "jquery": "../bower_components/jquery/dist/jquery",
         "underscore": "../bower_components/underscore/underscore",
-        "promise": "../bower_components/promise-ext/dist/promise",
+        "promise": "../bower_components/promizr/polyfill",
         "modernizr": "../bower_components/modernizr/modernizr",
 
         "mocha": "../bower_components/mocha/mocha",
@@ -32,6 +32,8 @@ requirejs.config({
 (<any>window).notrack = true;
 
 var tests = [
+    "promise",
+
     "base64",
     "path",
     "store",
