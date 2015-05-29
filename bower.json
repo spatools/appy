@@ -1,41 +1,42 @@
 {
-  "name": "appy",
-  "version": "0.1.6",
-  "authors": [
-    "SPA Tools"
-  ],
-  "description": "Set of tools to help Single Page Application development",
-  "main": "dist/appy.js",
-  "keywords": [
-    "knockout",
-    "knockoutjs",
-    "underscore",
-    "spa",
-    "utilities",
-    "javascript",
-    "tools",
-    "modules",
-    "spatools",
-    "amd"
-  ],
-  "license": "MIT",
-  "homepage": "https://github.com/spatools/appy",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "typings",
-    "nuget",
-    "test"
-  ],
-  "dependencies": {
-    "jquery": ">=1.9.0"
-  },
-  "devDependencies": {
-    "mocha": "^2.1.0",
-    "should": "^5.0.0",
-    "sinon": "http://sinonjs.org/releases/sinon-1.8.1.js",
-    "modernizr": "^2.8.3",
-    "promizr": "~0.1.3"
-  }
+    "name": "appy",
+    "version": "0.1.6",
+    "authors": [
+        "SPA Tools"
+    ],
+    "description": "Set of tools to help Single Page Application development",
+    "main": "dist/appy.js",
+    "keywords": [
+        "knockout",
+        "knockoutjs",
+        "underscore",
+        "spa",
+        "utilities",
+        "javascript",
+        "tools",
+        "modules",
+        "spatools",
+        "amd"
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/spatools/appy",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "typings",
+        "nuget",
+        "test"
+    ],
+    "dependencies": {
+        "requirejs": "^2.1.18",
+        "jquery": ">=1.9.0"
+    },
+    "devDependencies": {
+        "mocha": "^2.1.0",
+        "should": "^5.0.0",
+        "sinon": "http://sinonjs.org/releases/sinon-1.8.1.js",
+        "modernizr": "^2.8.3",
+        "promizr": "~0.1.3"
+    }
 }

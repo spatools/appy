@@ -182,6 +182,7 @@ module.exports = function (grunt) {
     grunt.registerTask("build", ["tslint:dev", "typescript:dist", "jshint:dist", "declaration"]);
     grunt.registerTask("dev", ["tslint:dev", "typescript:dev", "jshint:dev"]);
     grunt.registerTask("test", ["dev", "tslint:test", "typescript:test", "jshint:test", "mocha:test", "clean"]);
+    grunt.registerTask("btest", ["dev", "tslint:test", "typescript:test", "jshint:test", "connect:test", "clean"]);
     grunt.registerTask("nuget", ["nugetpack", "nugetpush"]);
 
     grunt.registerTask("default", ["clean", "test", "build"]);

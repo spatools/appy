@@ -68,7 +68,7 @@ define(["require", "exports"], function (require, exports) {
         Timer.prototype.setTimeout = function () {
             var _this = this;
             this.timeout = setTimeout(function () {
-                _this.onTimerTick.apply(_this, arguments);
+                _this.onTimerTick.apply(_this);
             }, this.interval);
         };
         Timer.prototype.onTimerTick = function () {
@@ -150,7 +150,7 @@ define(["require", "exports"], function (require, exports) {
         AsyncTimer.prototype.setTimeout = function () {
             var _this = this;
             this.timeout = setTimeout(function () {
-                _this.onTimerTick.apply(_this, arguments);
+                _this.onTimerTick.apply(_this);
             }, this.interval);
         };
         AsyncTimer.prototype.onTimerTick = function () {

@@ -1,5 +1,5 @@
 /// <reference path="../_definitions.d.ts" />
-define(["require", "exports", "promise"], function (require, exports, Promise) {
+define(["require", "exports"], function (require, exports) {
     var doc = document, head = doc.head, interval = 10, timeout = 150000, cssRules, sheet;
     function unsafe(callback) {
         if (typeof MSApp === "undefined") {

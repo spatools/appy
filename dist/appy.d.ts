@@ -1,5 +1,5 @@
 /// <reference path="../../../typings/jquery/jquery.d.ts" />
-/// <reference path="../../promise-ext/src/promise.d.ts" />
+/// <reference path="../../promizr/promise.d.ts" />
 
 declare module "koutils/base64" {
 var result: {
@@ -36,7 +36,6 @@ export function loadJSON<T>(key: string, url: string, force?: boolean): Promise<
 }
 
 declare module "koutils/loader" {
-import Promise = require("promise");
 /** Load script document by url */
 export function loadScript(url: string): Promise<string>;
 /** Load specified style into current page */

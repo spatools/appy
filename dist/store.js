@@ -1,7 +1,12 @@
 /// <reference path="../_definitions.d.ts" />
-define(["require", "exports", "promise/extensions"], function (require, exports, promiseExt) {
+define(["require", "exports"], function (require, exports) {
     var win = window, _store, stores = {};
     //#region Create Available Stores
+    function timeout() {
+        return new Promise(function (resolve) {
+            setTimeout(resolve, 1);
+        });
+    }
     var MemoryStorage = (function () {
         function MemoryStorage() {
             this.memory = {};
@@ -11,11 +16,11 @@ define(["require", "exports", "promise/extensions"], function (require, exports,
         };
         MemoryStorage.prototype.length = function () {
             var _this = this;
-            return promiseExt.timeout().then(function () { return Object.keys(_this.memory).length; });
+            return timeout().then(function () { return Object.keys(_this.memory).length; });
         };
         MemoryStorage.prototype.key = function (index) {
             var _this = this;
-            return promiseExt.timeout().then(function () {
+            return timeout().then(function () {
                 var key = Object.keys(_this.memory)[index];
                 if (!key) {
                     throw new Error("No key at index " + index);
@@ -25,23 +30,23 @@ define(["require", "exports", "promise/extensions"], function (require, exports,
         };
         MemoryStorage.prototype.getItem = function (key) {
             var _this = this;
-            return promiseExt.timeout().then(function () { return _this.clone(_this.memory[key]); });
+            return timeout().then(function () { return _this.clone(_this.memory[key]); });
         };
         MemoryStorage.prototype.setItem = function (key, value) {
             var _this = this;
-            return promiseExt.timeout().then(function () {
+            return timeout().then(function () {
                 _this.memory[key] = value;
             });
         };
         MemoryStorage.prototype.removeItem = function (key) {
             var _this = this;
-            return promiseExt.timeout().then(function () {
+            return timeout().then(function () {
                 delete _this.memory[key];
             });
         };
         MemoryStorage.prototype.clear = function () {
             var _this = this;
-            return promiseExt.timeout().then(function () {
+            return timeout().then(function () {
                 _this.memory = {};
             });
         };
@@ -242,19 +247,19 @@ define(["require", "exports", "promise/extensions"], function (require, exports,
             return Promise.resolve(storage.length);
         };
         StorageWrapper.prototype.key = function key(index) {
-            return promiseExt.timeout().then(function () { return storage.key(index); });
+            return timeout().then(function () { return storage.key(index); });
         };
         StorageWrapper.prototype.getItem = function getItem(key) {
-            return promiseExt.timeout().then(function () { return storage.getItem(key); });
+            return timeout().then(function () { return storage.getItem(key); });
         };
         StorageWrapper.prototype.setItem = function setItem(key, value) {
-            return promiseExt.timeout().then(function () { return storage.setItem(key, value); });
+            return timeout().then(function () { return storage.setItem(key, value); });
         };
         StorageWrapper.prototype.removeItem = function removeItem(key) {
-            return promiseExt.timeout().then(function () { return storage.removeItem(key); });
+            return timeout().then(function () { return storage.removeItem(key); });
         };
         StorageWrapper.prototype.clear = function clear() {
-            return promiseExt.timeout().then(function () { return storage.clear(); });
+            return timeout().then(function () { return storage.clear(); });
         };
         stores[type] = StorageWrapper;
     }

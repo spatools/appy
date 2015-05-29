@@ -1,13 +1,15 @@
 /// <reference path="../_definitions.d.ts" />
-define(["require", "exports", "jquery", "promise/extensions", "./loader", "./base64", "./store"], function (require, exports, $, promiseExt, loader, base64, store) {
+define(["require", "exports", "jquery", "./loader", "./base64", "./store"], function (require, exports, $, loader, base64, store) {
     var cacheKeyPrefix = "__APPY_CACHE__", promises = {}, doc = document, head = doc.head;
     //#region Public Methods
     /** Reset entire cache resources */
     function reset() {
         return store.length().then(function (length) {
-            return promiseExt.forEach(new Array(length), function (val, index) {
-                return store.key(index).then(function (key) { return store.removeItem(key); });
-            });
+            var promises = [], i = 0;
+            for (; i < length; i++) {
+                promises.push(store.key(i).then(removeIfInCache));
+            }
+            return Promise.all(promises);
         });
     }
     exports.reset = reset;
@@ -91,6 +93,12 @@ define(["require", "exports", "jquery", "promise/extensions", "./loader", "./bas
     }
     function saveCache(key, content) {
         return store.setItem(cacheKeyPrefix + key, JSON.stringify(content));
+    }
+    function removeIfInCache(key) {
+        if (key.indexOf(cacheKeyPrefix) === 0) {
+            return store.removeItem(key);
+        }
+        return Promise.resolve();
     }
 });
 //#endregion

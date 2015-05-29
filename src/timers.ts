@@ -82,7 +82,7 @@ export class Timer {
 
     private setTimeout(): void {
         this.timeout = setTimeout(() => {
-            this.onTimerTick.apply(this, arguments);
+            this.onTimerTick.apply(this);
         }, this.interval);
     }
 
@@ -180,7 +180,7 @@ export class AsyncTimer {
 
     private setTimeout(): void {
         this.timeout = setTimeout(() => {
-            this.onTimerTick.apply(this, arguments);
+            this.onTimerTick.apply(this);
         }, this.interval);
     }
 
