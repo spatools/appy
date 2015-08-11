@@ -4,7 +4,7 @@
     "description": "Set of tools to help Single Page Application development",
     "main": "dist/appy.js",
     "scripts": {
-        "install": "bower install && tsd reinstall",
+        "install": "bower install && tsd install",
         "test": "grunt test"
     },
     "repository": {

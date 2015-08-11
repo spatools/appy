@@ -18,6 +18,10 @@ interface StyleSheet {
     cssText: string;
 }
 
+interface HTMLStyleElement {
+    styleSheet: StyleSheet;
+}
+
 interface IDBEvent extends Event {
     target: IDBEventTarget;
 }
