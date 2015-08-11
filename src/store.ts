@@ -6,7 +6,7 @@ export interface ISimpleStorage {
     getItem(key: any): Promise<any>;
     setItem(key: any, value: any): Promise<void>;
     removeItem(key: any): Promise<void>;
-    clear(): Promise<void>
+    clear(): Promise<void>;
 }
 
 var win = <any>window,

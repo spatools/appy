@@ -76,4 +76,18 @@ describe("Path", () => {
 
     });
 
+    describe("simplify", () => {
+
+        it("should remove every '.' from the path", () => {
+            var result = path.simplify("test1/test2/./test3/test4/././test5.txt");
+            result.should.equal("test1/test2/test3/test4/test5.txt");
+        });
+
+        it("should resolve every '..' from the path", () => {
+            var result = path.simplify("test1/test2/../test3/test4/../../test5.txt");
+            result.should.equal("test1/test5.txt");
+        });
+
+    });
+
 });

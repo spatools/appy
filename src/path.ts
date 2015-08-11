@@ -230,3 +230,19 @@ export function getDirectoryName(path: string): string {
 export function combine(...paths: string[]): string {
     return paths.join(separator).replace(/[\/\\]+/g, separator);
 }
+
+/** Simplify a path by removing .. and . */
+export function simplify(path: string): string {
+    var paths = path.split(/[\/\\]+/),
+        index;
+
+    while ((index = paths.indexOf("..")) !== -1) {
+        paths.splice(index - 1, 2);
+    }
+
+    while ((index = paths.indexOf(".")) !== -1) {
+        paths.splice(index, 1);
+    }
+console.log(paths);
+    return paths.join(separator);
+}
