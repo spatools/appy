@@ -16,7 +16,8 @@ define(["require", "exports"], function (require, exports) {
         };
         MemoryStorage.prototype.length = function () {
             var _this = this;
-            return timeout().then(function () { return Object.keys(_this.memory).length; });
+            return timeout()
+                .then(function () { return Object.keys(_this.memory).length; });
         };
         MemoryStorage.prototype.key = function (index) {
             var _this = this;
@@ -30,25 +31,23 @@ define(["require", "exports"], function (require, exports) {
         };
         MemoryStorage.prototype.getItem = function (key) {
             var _this = this;
-            return timeout().then(function () { return _this.clone(_this.memory[key]); });
+            return timeout()
+                .then(function () { return _this.clone(_this.memory[key]); });
         };
         MemoryStorage.prototype.setItem = function (key, value) {
             var _this = this;
-            return timeout().then(function () {
-                _this.memory[key] = value;
-            });
+            return timeout()
+                .then(function () { _this.memory[key] = value; });
         };
         MemoryStorage.prototype.removeItem = function (key) {
             var _this = this;
-            return timeout().then(function () {
-                delete _this.memory[key];
-            });
+            return timeout()
+                .then(function () { delete _this.memory[key]; });
         };
         MemoryStorage.prototype.clear = function () {
             var _this = this;
-            return timeout().then(function () {
-                _this.memory = {};
-            });
+            return timeout()
+                .then(function () { _this.memory = {}; });
         };
         return MemoryStorage;
     })();
@@ -64,9 +63,7 @@ define(["require", "exports"], function (require, exports) {
         WebSQLStorage.prototype.executeSql = function (db, req, values) {
             return new Promise(function (resolve, reject) {
                 db.transaction(function (tx) {
-                    tx.executeSql(req, values || [], function (tx, result) {
-                        resolve(result);
-                    }, reject);
+                    tx.executeSql(req, values || [], function (tx, result) { resolve(result); }, reject);
                 }, reject);
             });
         };
@@ -79,27 +76,37 @@ define(["require", "exports"], function (require, exports) {
         };
         WebSQLStorage.prototype.length = function () {
             var _this = this;
-            return this.ensureDb().then(function (db) { return _this.executeSql(db, "SELECT COUNT(*) AS linecount FROM " + _this.tablename); }).then(function (result) { return result.rows.item(0).linecount; });
+            return this.ensureDb()
+                .then(function (db) { return _this.executeSql(db, "SELECT COUNT(*) AS linecount FROM " + _this.tablename); })
+                .then(function (result) { return result.rows.item(0).linecount; });
         };
         WebSQLStorage.prototype.clear = function () {
             var _this = this;
-            return this.ensureDb().then(function (db) { return _this.executeSql(db, "DELETE FROM " + _this.tablename + " WHERE 1=1"); }).then(function (result) { return undefined; });
+            return this.ensureDb()
+                .then(function (db) { return _this.executeSql(db, "DELETE FROM " + _this.tablename + " WHERE 1=1"); })
+                .then(function (result) { return undefined; });
         };
         WebSQLStorage.prototype.key = function (index) {
             var _this = this;
-            return this.ensureDb().then(function (db) { return _this.executeSql(db, "SELECT id FROM " + _this.tablename + " ORDER BY id LIMIT " + index + ", 1"); }).then(function (result) { return result.rows.length > 0 ? result.rows.item(0).id : null; });
+            return this.ensureDb()
+                .then(function (db) { return _this.executeSql(db, "SELECT id FROM " + _this.tablename + " ORDER BY id LIMIT " + index + ", 1"); })
+                .then(function (result) { return result.rows.length > 0 ? result.rows.item(0).id : null; });
         };
         WebSQLStorage.prototype.getItem = function (key) {
             var _this = this;
-            return this.ensureDb().then(function (db) { return _this.executeSql(db, "SELECT * FROM " + _this.tablename + " WHERE id=? LIMIT 1", [key]); }).then(function (result) { return result.rows.length > 0 ? result.rows.item(0).data : null; });
+            return this.ensureDb()
+                .then(function (db) { return _this.executeSql(db, "SELECT * FROM " + _this.tablename + " WHERE id=? LIMIT 1", [key]); })
+                .then(function (result) { return result.rows.length > 0 ? result.rows.item(0).data : null; });
         };
         WebSQLStorage.prototype.setItem = function (key, value) {
             var _this = this;
-            return this.ensureDb().then(function (db) { return _this.executeSql(db, "INSERT OR REPLACE INTO " + _this.tablename + " (id, data) VALUES (?, ?)", [key, value]); });
+            return this.ensureDb()
+                .then(function (db) { return _this.executeSql(db, "INSERT OR REPLACE INTO " + _this.tablename + " (id, data) VALUES (?, ?)", [key, value]); });
         };
         WebSQLStorage.prototype.removeItem = function (key) {
             var _this = this;
-            return this.ensureDb().then(function (db) { return _this.executeSql(db, "DELETE FROM " + _this.tablename + " WHERE id=?", [key]); });
+            return this.ensureDb()
+                .then(function (db) { return _this.executeSql(db, "DELETE FROM " + _this.tablename + " WHERE id=?", [key]); });
         };
         return WebSQLStorage;
     })();
@@ -143,7 +150,8 @@ define(["require", "exports"], function (require, exports) {
         };
         IndexedDBStorage.prototype.clear = function () {
             var _this = this;
-            return this.ensureDatabase().then(function (db) {
+            return this.ensureDatabase()
+                .then(function (db) {
                 return new Promise(function (resolve, reject) {
                     var tx = db.transaction([_this.tablename], "readwrite");
                     tx.oncomplete = function (e) { return resolve.call(undefined); };
@@ -159,9 +167,7 @@ define(["require", "exports"], function (require, exports) {
                     var store = db.transaction([_this.tablename], "readonly").objectStore(_this.tablename), request, result, i = 0;
                     if (store.count) {
                         request = store.count();
-                        request.onsuccess = function (e) {
-                            resolve(e.target.result);
-                        };
+                        request.onsuccess = function (e) { resolve(e.target.result); };
                         request.onerror = reject;
                     }
                     else {
@@ -204,9 +210,7 @@ define(["require", "exports"], function (require, exports) {
             return this.ensureDatabase().then(function (db) {
                 return new Promise(function (resolve, reject) {
                     var store = db.transaction([_this.tablename], "readonly").objectStore(_this.tablename), request = store.get(key);
-                    request.onsuccess = function (e) {
-                        resolve(e.target.result ? e.target.result.value : null);
-                    };
+                    request.onsuccess = function (e) { resolve(e.target.result ? e.target.result.value : null); };
                     request.onerror = reject;
                 });
             });
@@ -217,9 +221,7 @@ define(["require", "exports"], function (require, exports) {
                 return new Promise(function (resolve, reject) {
                     var store = db.transaction([_this.tablename], "readwrite").objectStore(_this.tablename), request = store.put({ key: key, value: value });
                     request.onerror = reject;
-                    request.onsuccess = function (e) {
-                        resolve(undefined);
-                    };
+                    request.onsuccess = function (e) { resolve(undefined); };
                 });
             });
         };
@@ -229,9 +231,7 @@ define(["require", "exports"], function (require, exports) {
                 return new Promise(function (resolve, reject) {
                     var store = db.transaction([_this.tablename], "readwrite").objectStore(_this.tablename), request = store.delete(key);
                     request.onerror = reject;
-                    request.onsuccess = function (e) {
-                        resolve(undefined);
-                    };
+                    request.onsuccess = function (e) { resolve(undefined); };
                 });
             });
         };
@@ -247,19 +247,24 @@ define(["require", "exports"], function (require, exports) {
             return Promise.resolve(storage.length);
         };
         StorageWrapper.prototype.key = function key(index) {
-            return timeout().then(function () { return storage.key(index); });
+            return timeout()
+                .then(function () { return storage.key(index); });
         };
         StorageWrapper.prototype.getItem = function getItem(key) {
-            return timeout().then(function () { return storage.getItem(key); });
+            return timeout()
+                .then(function () { return storage.getItem(key); });
         };
         StorageWrapper.prototype.setItem = function setItem(key, value) {
-            return timeout().then(function () { return storage.setItem(key, value); });
+            return timeout()
+                .then(function () { return storage.setItem(key, value); });
         };
         StorageWrapper.prototype.removeItem = function removeItem(key) {
-            return timeout().then(function () { return storage.removeItem(key); });
+            return timeout()
+                .then(function () { return storage.removeItem(key); });
         };
         StorageWrapper.prototype.clear = function clear() {
-            return timeout().then(function () { return storage.clear(); });
+            return timeout()
+                .then(function () { return storage.clear(); });
         };
         stores[type] = StorageWrapper;
     }

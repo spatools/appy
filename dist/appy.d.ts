@@ -93,6 +93,8 @@ export function getDirectory(path: string): string;
 export function getDirectoryName(path: string): string;
 /** Combine multiple path to create a single path */
 export function combine(...paths: string[]): string;
+/** Simplify a path by removing .. and . */
+export function simplify(path: string): string;
 }
 
 declare module "koutils/store" {

@@ -24,40 +24,43 @@ define(["require", "exports", "jquery", "./loader", "./base64", "./store"], func
     /** Load a script in cache */
     function loadScript(key, url, force) {
         if (force === void 0) { force = false; }
-        return cache(key, url, "application/x-javascript", true, force).then(function (entry) { return loader.loadScript(base64.createDataURL("application/x-javascript", entry.content)); });
+        return cache(key, url, "application/x-javascript", true, force)
+            .then(function (entry) { return loader.loadScript(base64.createDataURL("application/x-javascript", entry.content)); });
     }
     exports.loadScript = loadScript;
     /** Load a style in cache */
     function loadStyle(key, url, force) {
         if (force === void 0) { force = false; }
-        return cache(key, url, "text/css", false, force).then(function (entry) { return loader.loadStyle(entry.content); });
+        return cache(key, url, "text/css", false, force)
+            .then(function (entry) { return loader.loadStyle(entry.content); });
     }
     exports.loadStyle = loadStyle;
     /** Load a style sheet in cache */
     function loadStylesheet(key, url, force) {
         if (force === void 0) { force = false; }
-        return cache(key, url, "text/css", true, force).then(function (entry) { return loader.loadStylesheet(base64.createDataURL("text/css", entry.content)); });
+        return cache(key, url, "text/css", true, force)
+            .then(function (entry) { return loader.loadStylesheet(base64.createDataURL("text/css", entry.content)); });
     }
     exports.loadStylesheet = loadStylesheet;
     /** Load an HTML fragment in cache */
     function loadHTML(key, url, force) {
         if (force === void 0) { force = false; }
-        return cache(key, url, "text/html", false, force).then(function (entry) { return entry.content; });
+        return cache(key, url, "text/html", false, force)
+            .then(function (entry) { return entry.content; });
     }
     exports.loadHTML = loadHTML;
     /** Load an JSON result in cache */
     function loadJSON(key, url, force) {
         if (force === void 0) { force = false; }
-        return cache(key, url, "text/json", false, force).then(function (entry) { return JSON.parse(entry.content); });
+        return cache(key, url, "text/json", false, force)
+            .then(function (entry) { return JSON.parse(entry.content); });
     }
     exports.loadJSON = loadJSON;
     //#endregion
     //#region Private Methods
     function cache(key, url, mime, encode, force) {
         if (!promises[key]) {
-            var cleaner = function () {
-                delete promises[key];
-            }, promise = loadCache(key).then(function (result) {
+            var cleaner = function () { delete promises[key]; }, promise = loadCache(key).then(function (result) {
                 if (result && !force) {
                     return Promise.resolve(result);
                 }
@@ -87,9 +90,7 @@ define(["require", "exports", "jquery", "./loader", "./base64", "./store"], func
         });
     }
     function loadCache(key) {
-        return store.getItem(cacheKeyPrefix + key).then(function (result) {
-            return JSON.parse(result);
-        });
+        return store.getItem(cacheKeyPrefix + key).then(function (result) { return JSON.parse(result); });
     }
     function saveCache(key, content) {
         return store.setItem(cacheKeyPrefix + key, JSON.stringify(content));

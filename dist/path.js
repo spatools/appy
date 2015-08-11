@@ -236,4 +236,16 @@ define(["require", "exports"], function (require, exports) {
         return paths.join(exports.separator).replace(/[\/\\]+/g, exports.separator);
     }
     exports.combine = combine;
+    /** Simplify a path by removing .. and . */
+    function simplify(path) {
+        var paths = path.split(/[\/\\]+/), index;
+        while ((index = paths.indexOf("..")) !== -1) {
+            paths.splice(index - 1, 2);
+        }
+        while ((index = paths.indexOf(".")) !== -1) {
+            paths.splice(index, 1);
+        }
+        return paths.join(exports.separator);
+    }
+    exports.simplify = simplify;
 });

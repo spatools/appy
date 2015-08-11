@@ -64,12 +64,8 @@ define(["require", "exports"], function (require, exports) {
                 link.type = "text/css";
                 link.media = "all";
                 link.href = url;
-                timeoutId = setTimeout(function () {
-                    reject(new Error("timeout"));
-                }, timeout);
-                intervalId = setInterval(function () {
-                    checkStyleSheetLoaded(url, link, resolve);
-                }, interval);
+                timeoutId = setTimeout(function () { reject(new Error("timeout")); }, timeout);
+                intervalId = setInterval(function () { checkStyleSheetLoaded(url, link, resolve); }, interval);
                 if (!sheet) {
                     cssRules = "cssRules";
                     sheet = "sheet";
@@ -83,10 +79,8 @@ define(["require", "exports"], function (require, exports) {
                 if ("onerror" in link)
                     link.onerror = function (e) { return reject(e); };
                 if ("onreadystatechange" in link)
-                    link.onreadystatechange = function (e) {
-                        if (link.readyState === "complete" || link.readyState === "loaded")
-                            return link[sheet][cssRules].length ? resolve(url) : reject(link.readyState);
-                    };
+                    link.onreadystatechange = function (e) { if (link.readyState === "complete" || link.readyState === "loaded")
+                        return link[sheet][cssRules].length ? resolve(url) : reject(link.readyState); };
                 head.appendChild(link);
             }).then(cleaner, cleaner);
         });
