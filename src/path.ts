@@ -243,6 +243,6 @@ export function simplify(path: string): string {
     while ((index = paths.indexOf(".")) !== -1) {
         paths.splice(index, 1);
     }
-console.log(paths);
+
     return paths.join(separator);
 }

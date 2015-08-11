@@ -38,7 +38,7 @@ export class MemoryStorage implements ISimpleStorage {
             var key = Object.keys(this.memory)[index];
 
             if (!key) {
-                throw new Error("No key at index " + index);
+                throw new Error(`No key at index ${index}`);
             }
 
             return key;
@@ -89,7 +89,7 @@ export class WebSQLStorage implements ISimpleStorage {
     private ensureDb(): Promise<any> {
         if (!this.db) {
             var db = this.db = win.openDatabase(this.dbname, "1.0", "Appy Store Database", this.dbsize);
-            return this.executeSql(db, "CREATE TABLE IF NOT EXISTS " + this.tablename + " (id unique, data)").then(() => db);
+            return this.executeSql(db, `CREATE TABLE IF NOT EXISTS ${this.tablename} (id unique, data)`).then(() => db);
         }
 
         return Promise.resolve(this.db);
@@ -97,32 +97,32 @@ export class WebSQLStorage implements ISimpleStorage {
 
     public length(): Promise<number> {
         return this.ensureDb()
-            .then(db => this.executeSql(db, "SELECT COUNT(*) AS linecount FROM " + this.tablename))
+            .then(db => this.executeSql(db, `SELECT COUNT(*) AS linecount FROM ${this.tablename}`))
             .then(result => result.rows.item(0).linecount);
     }
     public clear(): Promise<void> {
         return this.ensureDb()
-            .then(db => this.executeSql(db, "DELETE FROM " + this.tablename + " WHERE 1=1"))
+            .then(db => this.executeSql(db, `DELETE FROM ${this.tablename} WHERE 1=1`))
             .then(result => undefined);
     }
 
     public key(index: number): Promise<any> {
         return this.ensureDb()
-            .then(db => this.executeSql(db, "SELECT id FROM " + this.tablename + " ORDER BY id LIMIT " + index + ", 1"))
+            .then(db => this.executeSql(db, `SELECT id FROM ${this.tablename} ORDER BY id LIMIT ${index}, 1`))
             .then(result => result.rows.length > 0 ? result.rows.item(0).id : null);
     }
     public getItem(key: string): Promise<any> {
         return this.ensureDb()
-            .then(db => this.executeSql(db, "SELECT * FROM " + this.tablename + " WHERE id=? LIMIT 1", [key]))
+            .then(db => this.executeSql(db, `SELECT * FROM ${this.tablename} WHERE id=? LIMIT 1`, [key]))
             .then(result => result.rows.length > 0 ? result.rows.item(0).data : null);
     }
     public setItem(key: string, value: any) {
         return this.ensureDb()
-            .then(db => this.executeSql(db, "INSERT OR REPLACE INTO " + this.tablename + " (id, data) VALUES (?, ?)", [key, value]));
+            .then(db => this.executeSql(db, `INSERT OR REPLACE INTO ${this.tablename} (id, data) VALUES (?, ?)`, [key, value]));
     }
     public removeItem(key: string) {
         return this.ensureDb()
-            .then(db => this.executeSql(db, "DELETE FROM " + this.tablename + " WHERE id=?", [key]));
+            .then(db => this.executeSql(db, `DELETE FROM ${this.tablename} WHERE id=?`, [key]));
     }
 }
 stores.websql = WebSQLStorage;

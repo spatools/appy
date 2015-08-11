@@ -129,12 +129,12 @@ else {
 
 /** Create Data URL with specified mime type and content */
 var createDataURL = function createDataURL(mimeType: string, content: string): string {
-    return "data:" + mimeType + ";base64," + content;
+    return `data:${mimeType};base64,${content}`;
 };
 
 /** Create Data URL with specified mime type and context */
 var encodeDataURL = function (mimeType: string, text: string): string {
-    return "data:" + mimeType + ";base64," + encode(text);
+    return `data:${mimeType};base64,${encode(text)}`;
 };
 
 var result = {
