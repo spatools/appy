@@ -98,6 +98,11 @@ export class Timer {
     //#endregion
 }
 
+export type Thenable = { then: (resolve: Function, reject?: Function) => void; };
+export type AsyncTimerCallback = (complete: () => void) => void;
+export type AsyncTimerThenable = () => Thenable;
+export type AsyncTimerCallbackParam = AsyncTimerCallback | AsyncTimerThenable;
+
 export class AsyncTimer {
     //#region Properties
 
@@ -114,7 +119,7 @@ export class AsyncTimer {
      */
     constructor(
         private interval: number,
-        private callback: (complete: () => void) => void,
+        private callback: AsyncTimerCallbackParam,
         private callBackContext: any = null,
         private enabled: boolean = false,
         private callOnFirstStart: boolean = false) {
@@ -186,7 +191,12 @@ export class AsyncTimer {
 
     private onTimerTick(): void {
         this.tickCount += this.interval;
-        this.callback.call(this.callBackContext, () => { this.completeCallback(); });
+
+        var complete = this.completeCallback.bind(this);
+        var result: Thenable = this.callback.call(this.callBackContext, complete);
+        if (result && result.then) {
+            result.then(complete, complete);
+        }
     }
 
     private completeCallback(): void {
