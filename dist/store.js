@@ -112,7 +112,7 @@ define(["require", "exports"], function (require, exports) {
     })();
     exports.WebSQLStorage = WebSQLStorage;
     stores.websql = WebSQLStorage;
-    var indexedDB = win.indexedDB || win.mozIndexedDB || win.webkitIndexedDB || win.msIndexedDB || win.indexedDBShim, IDBTransaction = win.IDBTransaction || win.webkitIDBTransaction || win.msIDBTransaction || (win.indexedDBShim && win.indexedDBShim.modules.IDBTransaction), IDBKeyRange = win.IDBKeyRange || win.webkitIDBKeyRange || win.msIDBKeyRange || (win.indexedDBShim && win.indexedDBShim.modules.IDBKeyRange);
+    var indexedDB = win.indexedDB || win.mozIndexedDB || win.webkitIndexedDB || win.msIndexedDB || win.shimIndexedDB, IDBTransaction = win.IDBTransaction || win.webkitIDBTransaction || win.msIDBTransaction || (win.shimIndexedDB && win.shimIndexedDB.modules.IDBTransaction), IDBKeyRange = win.IDBKeyRange || win.webkitIDBKeyRange || win.msIDBKeyRange || (win.shimIndexedDB && win.shimIndexedDB.modules.IDBKeyRange);
     var IndexedDBStorage = (function () {
         function IndexedDBStorage() {
             this.db = null;
