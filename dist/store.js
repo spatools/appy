@@ -112,15 +112,13 @@ define(["require", "exports"], function (require, exports) {
     })();
     exports.WebSQLStorage = WebSQLStorage;
     stores.websql = WebSQLStorage;
+    var indexedDB = win.indexedDB || win.mozIndexedDB || win.webkitIndexedDB || win.msIndexedDB || win.indexedDBShim, IDBTransaction = win.IDBTransaction || win.webkitIDBTransaction || win.msIDBTransaction || (win.indexedDBShim && win.indexedDBShim.modules.IDBTransaction), IDBKeyRange = win.IDBKeyRange || win.webkitIDBKeyRange || win.msIDBKeyRange || (win.indexedDBShim && win.indexedDBShim.modules.IDBKeyRange);
     var IndexedDBStorage = (function () {
         function IndexedDBStorage() {
             this.db = null;
             this.dbversion = 1;
             this.dbname = "appystore";
             this.tablename = "storetable";
-            win.indexedDB = win.indexedDB || win.webkitIndexedDB || win.mozIndexedDB || win.msIndexedDB;
-            win.IDBTransaction = win.IDBTransaction || win.webkitIDBTransaction || win.msIDBTransaction;
-            win.IDBKeyRange = win.IDBKeyRange || win.webkitIDBKeyRange || win.msIDBKeyRange;
         }
         IndexedDBStorage.prototype.createUpgradeNeeded = function (reject) {
             var _this = this;

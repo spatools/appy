@@ -135,7 +135,6 @@ export class IndexedDBStorage implements ISimpleStorage {
     dbversion: number;
     dbname: string;
     tablename: string;
-    constructor();
     private createUpgradeNeeded(reject);
     private checkDatabaseConnection();
     private ensureDatabase();
@@ -191,6 +190,12 @@ export class Timer {
     private setTimeout();
     private onTimerTick();
 }
+export type Thenable = {
+    then: (resolve: Function, reject?: Function) => void;
+};
+export type AsyncTimerCallback = (complete: () => void) => void;
+export type AsyncTimerThenable = () => Thenable;
+export type AsyncTimerCallbackParam = AsyncTimerCallback | AsyncTimerThenable;
 export class AsyncTimer {
     private interval;
     private callback;
@@ -207,7 +212,7 @@ export class AsyncTimer {
      * @param enabled Specifiy whether the timer need to be started directly
      * @param callOnFirstStart Specify whether the timer must start directly with a call to specified callback
      */
-    constructor(interval: number, callback: (complete: () => void) => void, callBackContext?: any, enabled?: boolean, callOnFirstStart?: boolean);
+    constructor(interval: number, callback: AsyncTimerCallbackParam, callBackContext?: any, enabled?: boolean, callOnFirstStart?: boolean);
     /** Get the total number of ticks elapsed since timer started. */
     getTickCount(): number;
     /** Set a new interval for the current timer. */

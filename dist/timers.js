@@ -154,9 +154,12 @@ define(["require", "exports"], function (require, exports) {
             }, this.interval);
         };
         AsyncTimer.prototype.onTimerTick = function () {
-            var _this = this;
             this.tickCount += this.interval;
-            this.callback.call(this.callBackContext, function () { _this.completeCallback(); });
+            var complete = this.completeCallback.bind(this);
+            var result = this.callback.call(this.callBackContext, complete);
+            if (result && result.then) {
+                result.then(complete, complete);
+            }
         };
         AsyncTimer.prototype.completeCallback = function () {
             if (this.enabled) {
