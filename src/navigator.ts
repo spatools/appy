@@ -4,6 +4,7 @@
 //"Mozilla/5.0 (BlackBerry; U; BlackBerry 9900; en) AppleWebKit/534.11+ (KHTML, like Gecko) Version/7.1.0.346 Mobile Safari/534.11+";
 //"Mozilla/5.0 (iPad; CPU OS 5_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko ) Version/5.1 Mobile/9B176 Safari/7534.48.3";
 //"Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build/IML74K) AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30";
+//"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240"
 
 /// <reference path="../_definitions.d.ts" />
 
@@ -40,6 +41,12 @@ if (reg.test(ua)) {
 
             sub = matches[9];
             subVersion = matches[10];
+        }
+        else if (matches[15] === "Edge") {
+            name = matches[15];
+            version = matches[16];
+            engine = "EdgeHTML";
+            engineVersion = matches[16];
         }
         else {
             sub = matches[12];
@@ -96,6 +103,7 @@ if (reg.test(ua)) {
 
     switch (name) {
         case "Internet Explorer":
+        case "Edge":
             if (versionNumber >= 8) prefix = "ms";
             break;
 
