@@ -127,18 +127,16 @@ export class WebSQLStorage implements ISimpleStorage {
 }
 stores.websql = WebSQLStorage;
 
+var indexedDB = win.indexedDB || win.mozIndexedDB || win.webkitIndexedDB || win.msIndexedDB || win.indexedDBShim,
+    IDBTransaction = win.IDBTransaction || win.webkitIDBTransaction || win.msIDBTransaction || (win.indexedDBShim && win.indexedDBShim.modules.IDBTransaction),
+    IDBKeyRange = win.IDBKeyRange || win.webkitIDBKeyRange || win.msIDBKeyRange || (win.indexedDBShim && win.indexedDBShim.modules.IDBKeyRange);
+
 export class IndexedDBStorage implements ISimpleStorage {
     private db: IDBDatabase = null;
 
     public dbversion: number = 1;
     public dbname = "appystore";
     public tablename = "storetable";
-
-    constructor() {
-        win.indexedDB = win.indexedDB || win.webkitIndexedDB || win.mozIndexedDB || win.msIndexedDB;
-        win.IDBTransaction = win.IDBTransaction || win.webkitIDBTransaction || win.msIDBTransaction;
-        win.IDBKeyRange = win.IDBKeyRange || win.webkitIDBKeyRange || win.msIDBKeyRange;
-    }
 
     private createUpgradeNeeded(reject: PromiseRejectFunction): (e: IDBVersionChangeEvent) => void {
         return (e: IDBVersionChangeEvent) => {
