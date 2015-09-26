@@ -101,6 +101,11 @@ if (reg.test(ua)) {
     mobile = regMobile.test(system);
     webkit = (/webkit/i).test(ua);
 
+    if (name === "Edge") {
+        os.alt.push(os.name);
+        os.name = "Windows";
+    }
+
     switch (name) {
         case "Internet Explorer":
         case "Edge":
