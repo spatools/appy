@@ -2,7 +2,7 @@
 define(["require", "exports"], function (require, exports) {
     var doc = document, head = doc.head, interval = 10, timeout = 150000, cssRules, sheet;
     function unsafe(callback) {
-        if (typeof MSApp === "undefined") {
+        if (typeof MSApp === "undefined" || !MSApp.execUnsafeLocalFunction) {
             return callback.call(null);
         }
         else {

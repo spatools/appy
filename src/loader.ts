@@ -5,7 +5,7 @@ var doc = document, head = doc.head,
     cssRules, sheet;
 
 function unsafe<T>(callback: () => T): T {
-    if (typeof MSApp === "undefined") {
+    if (typeof MSApp === "undefined" || !MSApp.execUnsafeLocalFunction) {
         return callback.call(null);
     } else {
         return MSApp.execUnsafeLocalFunction(callback);
