@@ -1,6 +1,6 @@
 {
     "name": "appy",
-    "version": "0.1.12",
+    "version": "0.1.13",
     "description": "Set of tools to help Single Page Application development",
     "main": "dist/appy.js",
     "scripts": {
