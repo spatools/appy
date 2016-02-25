@@ -212,7 +212,7 @@ export function getMimeType(path: string): string {
 }
 /** Get mime-type associated with specified extension */
 export function getMimeTypeByExtension(extension: string): string {
-    return mimeTypes[extension] || mimeTypes["*"];
+    return mimeTypes[extension.toLowerCase()] || mimeTypes["*"];
 }
 
 /** Get path without file name */
