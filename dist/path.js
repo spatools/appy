@@ -212,7 +212,7 @@ define(["require", "exports"], function (require, exports) {
     exports.getMimeType = getMimeType;
     /** Get mime-type associated with specified extension */
     function getMimeTypeByExtension(extension) {
-        return exports.mimeTypes[extension] || exports.mimeTypes["*"];
+        return exports.mimeTypes[extension.toLowerCase()] || exports.mimeTypes["*"];
     }
     exports.getMimeTypeByExtension = getMimeTypeByExtension;
     /** Get path without file name */
