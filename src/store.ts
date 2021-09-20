@@ -324,18 +324,17 @@ function createFromIStorage(type: string, storage: Storage): void {
 //#region Initialize best available storage
 
 (function () {
-    _store = new stores.localStorage();
-
-    if (!_store) {
-        if (stores.sessionStorage) {
-            _store = new stores.sessionStorage();
-        }
-        else if (stores.globalStorage) {
-            _store = new stores.globalStorage();
-        }
-        else {
-            _store = new stores.memory();
-        }
+    if (stores.localStorage) {
+        _store = new stores.localStorage();
+    }
+    else if (stores.sessionStorage) {
+        _store = new stores.sessionStorage();
+    }
+    else if (stores.globalStorage) {
+        _store = new stores.globalStorage();
+    }
+    else {
+        _store = new stores.memory();
     }
 })();
 
